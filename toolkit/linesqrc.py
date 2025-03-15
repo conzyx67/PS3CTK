@@ -22,7 +22,7 @@ def backup_wave(ftp):
         print("Backup canceled.")
         return
 
-    local_file = os.path.join(save_path, f"{backup_name}.qgl.bak")
+    local_file = os.path.join(save_path, f"{backup_name}.qrc.bak")
     remote_file = "/dev_blind/vsh/resource/qgl/lines.qrc"
 
     try:
