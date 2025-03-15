@@ -1,6 +1,5 @@
 import ftplib
 import os
-from tkinter import Tk, filedialog, simpledialog
 
 def connect_to_ftp(server, username, password):
     try:
@@ -13,12 +12,12 @@ def connect_to_ftp(server, username, password):
         return None
 
 def backup_wave(ftp):
-    backup_name = simpledialog.askstring("Backup Name", "Enter the backup name (without extension):")
+    backup_name = input("Enter the backup name (without extension): ")
     if not backup_name:
         print("Backup canceled.")
         return
 
-    save_path = filedialog.askdirectory(title="Select Directory to Save Backup")
+    save_path = input("Enter the directory path to save the backup: ")
     if not save_path:
         print("Backup canceled.")
         return
@@ -34,9 +33,10 @@ def backup_wave(ftp):
         print(f"Error backing up file: {e}")
 
 def install_wave(ftp):
-    Tk().withdraw()  # Hide the root window
-    file_path = filedialog.askopenfilename(title="Select lines.qrc File", filetypes=[("lines.qrc", "lines.qrc")])
-    if not file_path:
+    # this shit will give 451 action abvorted please hlep fix ty bye make pr please
+
+    file_path = input("Enter the full path to the lines.qrc file: ")
+    if not file_path or not os.path.isfile(file_path):
         print("Installation canceled.")
         return
 
@@ -68,7 +68,7 @@ def main():
         if choice == "1":
             backup_wave(ftp)
         elif choice == "2":
-            install_wave(ftp)
+            print("Directly installing waves is not supported right now due to my stupid code. If you would like to fix it and avoid the inevitable 451 Action Aborted error, please make a pull request. Please manually upload your lines.qrc file to /dev_blind/vsh/resource/qgl/.")
         elif choice == "3":
             ftp.quit()
             print("Disconnected from FTP server.")
@@ -77,5 +77,4 @@ def main():
             print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
-    Tk().withdraw()  # Hide the root window for dialogs
     main()
